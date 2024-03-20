@@ -3,6 +3,8 @@ import random
 # Lista de palabras posibles
 words = ["python", "programación", "computadora", "código", "desarrollo",
 "inteligencia"]
+
+# Lista de vocales para ser insertadas si es necesario en la dificultad 1
 vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "u", "ú"]
 
 # Elegir una palabra al azar
@@ -41,14 +43,15 @@ fails = 0
 # Itera hasta que la cantidad de fallos alcance el maximo posible
 while (fails < max_fails):
     
-    # Se carga la palabra a acertar con las vocales
+    # Se carga la palabra a acertar con las vocales ya acertadas
 	if (difficulty == 1):
 		for letter in secret_word:
 			if letter in vowels:
 				guessed_letters.append(letter)
-    # Se carga la palabra a acertar con la primer y la última letra
+    # Se carga la palabra a acertar con la primer y la última letra ya acertadas
 	elif (difficulty == 2):
-		NotImplemented	
+		guessed_letters.append(secret_word[0])
+		guessed_letters.append(secret_word[-1])
 
 	# Pedir al jugador que ingrese una letra
 	letter = input("Ingresa una letra: ").lower()
@@ -75,28 +78,12 @@ while (fails < max_fails):
  
 	# Mostrar la palabra parcialmente adivinada
 	letters = []
-	
-	# Se cargan las vocales y las letras acertadas para que ya figuren como aciertos
-	if (difficulty == 1):
-		for letter in secret_word:
-			if letter in vowels:
-				letters.append(letter)
-			elif letter in guessed_letters:
-				letters.append(letter)
-			else:
-				letters.append("_")
-			
-	# Se cargan la primer y la última letra y las letras acertadas para que ya figuren como aciertos
-	elif (difficulty == 2):
-		NotImplemented
-	
-	# Se sólo las letras acertadas para que ya figuren como aciertos
-	else:
-		for letter in secret_word:
-			if letter in guessed_letters:
-				letters.append(letter)
-			else:
-				letters.append("_")
+ 
+	for letter in secret_word:
+		if letter in guessed_letters:
+			letters.append(letter)
+		else:
+			letters.append("_")
     
 	word_displayed = "".join(letters)
 	print(f"Palabra: {word_displayed}")
