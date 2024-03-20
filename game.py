@@ -3,7 +3,7 @@ import random
 # Lista de palabras posibles
 words = ["python", "programación", "computadora", "código", "desarrollo",
 "inteligencia"]
-vocals = ["a", "e", "i", "o", "u"]
+vowels = ["a", "á", "e", "é", "i", "í", "o", "ó", "u", "ú"]
 
 # Elegir una palabra al azar
 secret_word = random.choice(words)
@@ -20,14 +20,16 @@ difficulty = int(input("Ingrese la dificultad en la que quieres jugar! 1. Fácil
 # Valida que se ingrese una dificultad válida
 while (difficulty > 3) or (difficulty < 1):
 	difficulty = int(input("Ingresaste una dificultad no válida. Ingrese alguna de las siguientes: 1. Fácil 2. Medio 3. Difícil "))
- 
-word_displayed = "_" * len(secret_word)
 
+# Se muestran las vocales 
 if (difficulty == 1):
-	NotImplemented
-
+	word_displayed = "".join([letter if letter in vowels else "_" for letter in secret_word])
+# Se muestra la primer y la última letra
 elif (difficulty == 2):
-	NotImplemented
+	word_displayed = secret_word[0] + "_" * (len(secret_word)-2) + secret_word[-1]
+# No se muestra ninguna letra
+else: 
+	word_displayed = "_" * len(secret_word)
 
 
 # Mostrarla palabra parcialmente adivinada
@@ -38,6 +40,16 @@ fails = 0
 
 # Itera hasta que la cantidad de fallos alcance el maximo posible
 while (fails < max_fails):
+    
+    # Se carga la palabra a acertar con las vocales
+	if (difficulty == 1):
+		for letter in secret_word:
+			if letter in vowels:
+				guessed_letters.append(letter)
+    # Se carga la palabra a acertar con la primer y la última letra
+	elif (difficulty == 2):
+		NotImplemented	
+
 	# Pedir al jugador que ingrese una letra
 	letter = input("Ingresa una letra: ").lower()
  
@@ -63,12 +75,29 @@ while (fails < max_fails):
  
 	# Mostrar la palabra parcialmente adivinada
 	letters = []
-	for letter in secret_word:
-		if letter in guessed_letters:
-			letters.append(letter)
-		else:
-			letters.append("_")
-   
+	
+	# Se cargan las vocales y las letras acertadas para que ya figuren como aciertos
+	if (difficulty == 1):
+		for letter in secret_word:
+			if letter in vowels:
+				letters.append(letter)
+			elif letter in guessed_letters:
+				letters.append(letter)
+			else:
+				letters.append("_")
+			
+	# Se cargan la primer y la última letra y las letras acertadas para que ya figuren como aciertos
+	elif (difficulty == 2):
+		NotImplemented
+	
+	# Se sólo las letras acertadas para que ya figuren como aciertos
+	else:
+		for letter in secret_word:
+			if letter in guessed_letters:
+				letters.append(letter)
+			else:
+				letters.append("_")
+    
 	word_displayed = "".join(letters)
 	print(f"Palabra: {word_displayed}")
  
